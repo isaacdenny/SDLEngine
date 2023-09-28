@@ -4,10 +4,10 @@ int main(int argc, char* argv[]) {
 	bool running = true;
 	static Engine* engine = new Engine();
 
-	engine->startObjects();
+	engine->startEntities();
 	while (running) {
 		// Cover last frame
-		engine->updateObjects();
+		engine->updateEntities();
 		if (engine->pollEvents()) {
 			running = false;
 		}

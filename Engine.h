@@ -1,13 +1,13 @@
 #ifndef ENGINE_H
 #define ENGINE_H
 
-using namespace std;
 #include<iostream>
 #include <set>
 #include<SDL2/SDL.h>
 
-#include"Input.h"
-#include "GameObject.h"
+#include"GameEntity.h"
+
+using namespace std;
 
 #define WIDTH 640
 #define HEIGHT 480
@@ -19,13 +19,13 @@ private:
 	SDL_Window* m_window;
 	SDL_Renderer* m_renderer;
 	SDL_Event* m_event;
-	set<GameObject*> m_gameObjectsInScene;
+	set<GameEntity*> m_entitiesInScene;
 public:
 	Engine();
 	bool pollEvents();
 	void renderObjects();
-	void startObjects();
-	void updateObjects();
+	void startEntities();
+	void updateEntities();
 	void shutDown();
 	void delay();
 };

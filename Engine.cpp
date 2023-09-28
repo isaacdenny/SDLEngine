@@ -1,5 +1,8 @@
-#include "Engine.h"
-#include "Player.h"
+#include"Engine.h"
+#include"Input.h"
+#include"Enhancer.h"
+#include"Shield.h"
+#include"PlayerController.h"
 
 Engine::Engine() : m_event(new SDL_Event), m_renderer(), m_window()
 {
@@ -25,8 +28,10 @@ Engine::Engine() : m_event(new SDL_Event), m_renderer(), m_window()
 		return;
 	}
 
-	Player* player = new Player();
-	m_gameObjectsInScene.insert(player);
+	GameEntity* p = new GameEntity("Player");
+	p->addEnhancer(new PlayerController()); // custom directive example
+	p->addEnhancer(new Shield());
+	m_entitiesInScene.insert(p);
 }
 
 bool Engine::pollEvents()
@@ -51,10 +56,10 @@ void Engine::renderObjects()
 	SDL_SetRenderDrawColor(m_renderer, 0, 0, 0, 255);
 	SDL_RenderClear(m_renderer);
 	// Draw all gameObjects in the scene
-	for (GameObject* go : m_gameObjectsInScene)
+	for (GameEntity* ge : m_entitiesInScene)
 	{
-		vector<int> location = go->getTransform()->getLocation();
-		vector<int> scale = go->getTransform()->getScale();
+		vector<int> location = ge->getLocation();
+		vector<int> scale = ge->getScale();
 		SDL_Rect rect = { (int)location[0], (int)location[1], scale[0], scale[1]}; // 0 = X, 1 = Y
 
 		SDL_SetRenderDrawColor(m_renderer, 255, 0, 0, 255);
@@ -63,17 +68,21 @@ void Engine::renderObjects()
 	}
 }
 
-void Engine::startObjects()
+void Engine::startEntities()
 {
-	for (GameObject* go : m_gameObjectsInScene) {
-		go->onStart();
+	for (GameEntity* ge : m_entitiesInScene) {
+		for (Enhancer* e : ge->getEnhancers()) {
+			e->onStart();
+		}
 	}
 }
 
-void Engine::updateObjects()
+void Engine::updateEntities()
 {
-	for (GameObject* go : m_gameObjectsInScene) {
-		go->onUpdate();
+	for (GameEntity* ge : m_entitiesInScene) {
+		for (Enhancer* e : ge->getEnhancers()) {
+			e->onUpdate();
+		}
 	}
 }
 
