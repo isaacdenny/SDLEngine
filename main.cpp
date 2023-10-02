@@ -1,20 +1,14 @@
 #include"Engine.h"
+#include"PlayerController.h"
 
 int main(int argc, char* argv[]) {
-	bool running = true;
-	static Engine* engine = new Engine();
+	Engine* engine = new Engine();
 
-	engine->startEntities();
-	while (running) {
-		// Cover last frame
-		engine->updateEntities();
-		if (engine->pollEvents()) {
-			running = false;
-		}
-		engine->renderObjects();
-		engine->delay();
-	}
+	GameEntity* p = new GameEntity("Player");
+	p->addEnhancer(new PlayerController()); // custom directive example
+	p->addEnhancer(new Shield());
+	engine->E_addEntity(p);
 
-	engine->shutDown();
+	engine->G_play();
 	return 0;
 }

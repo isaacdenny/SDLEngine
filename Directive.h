@@ -7,8 +7,8 @@ class Directive :
     public Enhancer
 {
 private:
-    void onStart() override;
-    void onUpdate() override;
+    void onStart() override {}
+    void onUpdate() override {}
 };
 
 #endif 

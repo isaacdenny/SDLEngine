@@ -10,9 +10,20 @@ class Shield :
     public Enhancer
 {
 private:
-    void handleCollisions();
-    void onStart() override;
-    void onUpdate() override;
+	void onStart() override {}
+    void onUpdate() override {
+		vector<int> pos = getEntity()->getLocation();
+		if (pos[0] <= 0)
+			getEntity()->translateTo(0, pos[1]);
+		if (pos[0] >= 640 + 25)
+			getEntity()->translateTo(640 - 25, pos[1]);
+		if (pos[1] <= 0)
+			getEntity()->translateTo(pos[0], 0);
+		if (pos[1] >= 480 + 25)
+		{
+			getEntity()->translateTo(pos[0], 480 - 25);
+		}
+	}
 };
 
 #endif
