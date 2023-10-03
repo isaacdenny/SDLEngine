@@ -24,23 +24,28 @@ Welcome to SDL Engine, a simple C++ game engine framework built using libSDL2.0.
 
 To get started with SDL Engine, follow these steps:
 
-### Download the .exe
-(Work in progress! Should be up in a few days)
-
 ### Building from source
-1. Clone this repository to your local machine:
 
+1. Clone this repository to your local machine:
    ```bash
    git clone https://github.com/isaacdenny/SDLEngine.git
    ```
-2. Build with CMake
-
-  ```bash
-  mkdir build
-  cd build
-  cmake ../
-  cmake --build ../
-  ```
-
-3. You should now be able to run the executable for your system!
+2. Build the solution with Visual Studio
+3. Link the .lib file in the output folders to your project and include the SDLEngine header files
+4. Create a driver file like this one to get started:
+   ```
+   #include<SDLEngine/Engine.h>
+   
+   int main() {
+   	Engine engine;
+   	GameEntity p("Player");
+   	p.addEnhancer(new Shield);
+   	p.addEnhancer(new SimplePlayerController);
+   	engine.E_addEntity(&p);
+   
+   	engine.G_play();
+   
+   	return 0;
+   }
+   ```
    
