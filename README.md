@@ -33,7 +33,8 @@ To get started with SDL Engine, follow these steps:
    ```
 3. Build the solution with Visual Studio
 4. Link the .lib file in the output folders to your project and include the SDLEngine header files
-5. Create a driver file like this one to get started:
+5. Create a Post Build Event to put the SDL2d.dll file in the same folder as your program's .exe
+6. Create a driver file like this one to get started:
    
    ```
    #include<SDLEngine/Engine.h>
